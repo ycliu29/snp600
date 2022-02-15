@@ -1,0 +1,17 @@
+/* general attributes */
+body {font-family: 'Nunito', sans-serif;font-family: 'Roboto', sans-serif;}
+
+/* index template */
+.index_container {display: flex; flex-wrap:wrap}
+.index_chart{min-width: 250px; padding: 15px;}
+
+.index_tb {width:80%}
+.index_tb th {text-align: left;}
+.index_tb td {text-align: right}
+.index_positive { color:rgb(0, 176, 0)}
+.index_negative { color: red}
+
+/* detail template */
+.detail_tb th, .detail_tb td { padding: 0.35rem;border: solid 0.1rem rgb(171, 171, 171); }
+.detail_tb th { background-color: rgb(255, 249, 229); }
+.detail_tb {border-collapse: collapse;}

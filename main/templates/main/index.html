@@ -1,0 +1,66 @@
+{% extends 'main/main.html' %}
+{% load main_extras %}
+{% load humanize %}
+
+{%block content%}
+<h3>Latest record date: {{latest_record_date}}</h3>
+
+<container class="index_container">
+    <div class="index_chart">
+        <table class="index_tb">
+            <thead>
+                <h4>Top 10 growth stocks</h4>
+            </thead>
+            <tbody>
+                {%for key, value in top_growth_dict.items%}
+                
+                    <tr>
+                        <th><a href="{%url 'detailed_view' key %}">{{key}}</a></th>
+                        {%if value > 0%}
+                        <td class='index_positive'>{{value|to_percentage:2}}%</td>
+                        {%elif value < 0%}
+                        <td class='index_negative'><a>{{value|to_percentage:2}}%</td>
+                        {%endif%}
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="index_chart">
+        <table class="index_tb">
+            <thead>
+                <h4>Top 10 decline stocks</h4>
+            </thead>
+            <tbody>
+                {%for key, value in most_decline_dict.items%}
+                <tr>
+                    <th><a href="{%url 'detailed_view' key %}">{{key}}</a></th>
+                    {%if value > 0%}
+                    <td class='index_positive'>{{value|to_percentage:2}}%</td>
+                    {%elif value < 0%}
+                    <td class='index_negative'>{{value|to_percentage:2}}%</td>
+                    {%endif%}
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="index_chart">
+        <table class="index_tb">
+            <thead>
+                <h4>Top 10 traded stocks(volume)</h4>
+            </thead>
+            <tbody>
+                {%for key, value in most_traded_dict.items%}
+                <tr>
+                    <th><a href="{%url 'detailed_view' key %}">{{key}}</a></th>
+                    <td>{{value|intcomma}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</container>
+{%endblock%}

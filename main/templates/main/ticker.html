@@ -1,0 +1,32 @@
+{% extends 'main/main.html' %}
+{%block content%}
+{% load humanize %}
+
+    <h3>Last 7 trading day</h3>
+    <h5>Currency in USD</h5>
+    <table class="detail_tb">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for item in return_list%}
+            <tr>
+                <td>{{item.date}}</td>
+                <td>{{item.open|floatformat:2|intcomma}}</td>
+                <td>{{item.high|floatformat:2|intcomma}}</td>
+                <td>{{item.low|floatformat:2|intcomma}}</td>
+                <td>{{item.close|floatformat:2|intcomma}}</td>
+                <td>{{item.volume|intcomma}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    
+{%endblock%}
