@@ -1,9 +1,19 @@
 {% extends 'main/main.html' %}
-{%block content%}
+{% block content %}
 {% load humanize %}
+{% load static %}
+<script type="text/javascript" src="{% static 'main/ticker_script.js' %}" ></script>
 
-    <h3>Last 7 trading day</h3>
+    <h3>{{ticker}} | Last 7 trading days</h3>
     <h5>Currency in USD</h5>
+
+    <!-- l30d price/volume chart display -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <container class="detail_chart_container">
+    <canvas id="myChart" width="200" height="200"></canvas>
+    </container>    
+
+    <br>
     <table class="detail_tb">
         <thead>
             <tr>
@@ -29,4 +39,7 @@
         </tbody>
     </table>
     
+    <!-- data for chart usage -->
+    {{ last_30_trading_dates|json_script:"last_30_trading_dates" }}
+    {{ last_30_close_price|json_script:"last_30_close_price"}}
 {%endblock%}

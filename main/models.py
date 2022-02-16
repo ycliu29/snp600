@@ -45,6 +45,34 @@ class Record(models.Model):
                 latest_record_date = date.today()-timedelta(i)
                 break
         return latest_record_date
+    
+    # not the last_30_trading/closeprice returns list of 30 elements in DESC order
+    @property
+    def last_30_trading_dates(self):
+        return_list = []
+        count = 0
+        latest_record_date = self.latest_record_date
+        for i in range(0,100):
+            if len(Record.objects.filter(ticker=self.ticker).filter(date=latest_record_date-timedelta(i))) > 0:
+                return_list.append(Record.objects.filter(ticker=self.ticker).filter(date=latest_record_date-timedelta(i))[0].date)
+                count += 1
+                if count >= 30:
+                    break
+        return return_list
+    
+    @property
+    def last_30_close_price(self):
+        return_list = []
+        count = 0
+        latest_record_date = self.latest_record_date
+        for i in range(0,100):
+            if len(Record.objects.filter(ticker=self.ticker).filter(date=latest_record_date-timedelta(i))) > 0:
+                return_list.append(Record.objects.filter(ticker=self.ticker).filter(date=latest_record_date-timedelta(i))[0].close)
+                count += 1
+                if count >= 30:
+                    break
+        return return_list
+
 
     # return a list of record objects of the last 7 trading days(trace up to 49 calendar days ago)
     @property

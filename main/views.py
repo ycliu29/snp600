@@ -50,7 +50,11 @@ def index(request):
 def detailed_view(request, ticker):
 
     return_list = Record.objects.filter(ticker=ticker)[0].last7d_records
+    last_30_trading_dates = Record.objects.filter(ticker=ticker)[0].last_30_trading_dates
+    last_30_close_price = Record.objects.filter(ticker=ticker)[0].last_30_close_price
     return render(request,'main/ticker.html',{
         'ticker': ticker,
-        'return_list': return_list
+        'return_list': return_list,
+        'last_30_trading_dates': last_30_trading_dates[::-1],
+        "last_30_close_price": last_30_close_price[::-1]
     })
