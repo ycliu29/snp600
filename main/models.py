@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import timedelta, date
+from .tickers import TICKERS
 
 # Create your models here.
 
@@ -37,6 +38,43 @@ class Record(models.Model):
         price_change = round(price_change,5)
         return price_change
 
+    # return a return_items # of sorted(DESC) price change dict of all stocks in TICKERS of the latest trading day(arg can be negative to start access the last item)
+    def sorted_price_change_dict(self, return_items):
+        price_change_dict = {}
+        latest_record_date = self.latest_record_date
+        for ticker in TICKERS:
+            # if == 0 is triggered, need to look into specail events(might be index change)
+            if len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date)) == 0:
+                print("error: " + ticker)
+            elif len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date))>0:
+                price_change_dict[ticker] = Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change
+        sorted_price_change_dict = dict(sorted(price_change_dict.items(),key=lambda item:item[1],reverse=True))
+        l = list(sorted_price_change_dict.items())
+
+        return_dict = {}
+        print(l[0][0])
+        if return_items > 0:
+            for i in range(return_items):
+                return_dict[l[i][0]] = l[i][1]
+        elif return_items < 0:
+            for i in range(len(l)-1,len(l)+return_items-1,-1):
+                return_dict[l[i][0]] = l[i][1]
+        return return_dict
+    
+    # return a return_items # of sorted(DESC) volume dict of all stocks in TICKERS of the latest trading day
+    def sorted_volume_dict(self, return_items):
+        volume_dict = {}
+        latest_record_date = self.latest_record_date
+        for ticker in TICKERS:
+            if len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date))>0:
+                volume_dict[ticker] = Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].volume
+        sorted_volume_dict = dict(sorted(volume_dict.items(),key=lambda item:item[1],reverse=True))
+        
+        return_dict = {}
+        for i in range(return_items):
+            return_dict[list(sorted_volume_dict.items())[i][0]] = list(sorted_volume_dict.items())[i][1]
+        return return_dict
+
     # find the latest record date by looping from today up to 19 days ago
     @property
     def latest_record_date(self):
@@ -46,7 +84,7 @@ class Record(models.Model):
                 break
         return latest_record_date
     
-    # not the last_30_trading/closeprice returns list of 30 elements in DESC order
+    # note the last_30_trading/closeprice returns lists of 30 elements in DESC order
     @property
     def last_30_trading_dates(self):
         return_list = []
@@ -72,7 +110,6 @@ class Record(models.Model):
                 if count >= 30:
                     break
         return return_list
-
 
     # return a list of record objects of the last 7 trading days(trace up to 49 calendar days ago)
     @property
