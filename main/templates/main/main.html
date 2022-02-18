@@ -12,11 +12,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&family=Roboto:wght@300&display=swap" rel="stylesheet">
     <!-- icon to be updated -->
     <link rel="shortcut icon" href="#"/> 
+    <script src="https://kit.fontawesome.com/2a054aa631.js" crossorigin="anonymous"></script>
+    
     <script type="text/javascript" src="{% static 'main/script.js' %}" ></script>
     <title>S&P500 Tracker</title>
 </head>
 <body>
-    <h1>Navbar Placeholder</h1>
+    <nav class="main_navigation">
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">S&P600</label>
+        <ul>
+            <li>
+                <a class="active" href="#">00Home</a>
+            <li>
+                <a href="#">01Index1</a>
+            <li>
+                <a href="#">02Index2</a>
+            <li>
+                <a href="#">03Index3</a>
+        </ul>
+    </nav>
     {%block content%}
     <!-- content goes here -->
     {%endblock%}

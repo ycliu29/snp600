@@ -52,7 +52,6 @@ class Record(models.Model):
         l = list(sorted_price_change_dict.items())
 
         return_dict = {}
-        print(l[0][0])
         if return_items > 0:
             for i in range(return_items):
                 return_dict[l[i][0]] = l[i][1]

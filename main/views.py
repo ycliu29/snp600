@@ -3,8 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Record
 
-# returning 2 dictionaries to template
-# 1: price change percetage | 2: trade volume 
+# returning 3 dictionaries to template | top growth/decline/volume | plus latest record date
 def index(request):
     # calling methods to get full dictionaries
     latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
@@ -27,6 +26,7 @@ def detailed_view(request, ticker):
     return render(request,'main/ticker.html',{
         'ticker': ticker,
         'return_list': return_list,
+        # reverse the list as the lists were start generated from the latest dates
         'last_30_trading_dates': last_30_trading_dates[::-1],
-        "last_30_close_price": last_30_close_price
+        "last_30_close_price": last_30_close_price[::-1]
     })
