@@ -1,7 +1,58 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
 from .models import Record
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        elif user is None:
+            return render(request, 'main/login.html',{
+                'error_message': "Invalid username or password, please try again."
+            })
+    elif request.method == "GET":
+        return render(request, 'main/login.html')
+
+def logout_user(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('index')
+    if not request.user.is_authenticated:
+        return render(request, 'main/login.html',{
+                'error_message': "Login first to use this function."
+            })
+
+def create_account(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        password_confirmation = request.POST['password_confirmation']
+        email = request.POST['email']
+        if password == password_confirmation and username and password and password_confirmation and email:
+            u,created = User.objects.get_or_create(username=username, email=email)
+            if created:
+                u.set_password(password)
+                u.save()
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+            return redirect('index')
+        else:
+            return render(request, 'main/create_account.html',{
+                'error_message': "Invalid credentials, please try again."
+            })
+    elif request.method == "GET":
+        if request.user.is_authenticated:
+           return redirect('index')
+        elif not request.user.is_authenticated:
+            return render(request, 'main/create_account.html')
+
 
 # returning 3 dictionaries to template | top growth/decline/volume | plus latest record date
 def index(request):
