@@ -11,7 +11,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'snp600.settings')
 django.setup()
 
 from datetime import date
-from main.models import Record
+from main.models import Record, Stock
 from csv import reader
 
 # import stock tickers(array) from main/tickers.py
@@ -34,8 +34,17 @@ def download_csv():
         file_path=os.path.join(file_dir, csv_folder, file_name)
         data.to_csv(file_path,index=True)
 
+# 2. check and create Stock models if deosn't exist
+def create_stock_models():
+    for ticker in TICKERS:
+        try:
+            object = Stock.objects.get(ticker=ticker)
+        except Stock.DoesNotExist:
+            object = Stock(ticker=ticker)
+            object.save()
 
-# 2. populate Record classes
+
+# 3. populate Record models
 def update_model():
     for filename in os.listdir("main/data"):
         file_path = "main/data/" + filename
@@ -50,7 +59,7 @@ def update_model():
                     pass
                 else:
                     # converting volume metric to avoid x.0 situation
-                    new_record = Record(ticker=filename[:-4],date=row[0],open=row[1],high=row[2],low=row[3],close=row[4],volume=int(float(row[6])))
+                    new_record = Record(ticker=filename[:-4],date=row[0],open=row[1],high=row[2],low=row[3],close=row[4],volume=int(float(row[6])),stock=Stock.objects.get(ticker=filename[:-4]))
                     
                     #check date and ticker to avoid duplicates
                     if not Record.objects.filter(ticker=new_record.ticker).filter(date=new_record.date):
@@ -59,4 +68,5 @@ def update_model():
 # ---
 # call functions
 download_csv()
+create_stock_models()
 update_model()

@@ -1,8 +1,28 @@
 from django.db import models
 from datetime import timedelta, date
+from django.contrib.auth.models import User
 from .tickers import TICKERS
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
+
+class Stock(models.Model):
+    ticker = models.CharField(max_length=10, null=True, blank=True)
+
+    def __str__(self):
+        return self.ticker
+
+class Person(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(null=True,blank=True)
+    watchlist = models.ForeignKey(Stock,related_name='watchlist',on_delete=models.PROTECT, null=True, blank=True)
+    notification_list= models.ForeignKey(Stock,related_name='notification',on_delete=models.PROTECT, null=True, blank=True)
+
+    def __str__(self):
+        string = self.username + "(Person)"
+        return string
 
 class Record(models.Model):
     ticker = models.CharField(max_length=10, null=True, blank=True)
@@ -12,6 +32,7 @@ class Record(models.Model):
     low = models.DecimalField(max_digits=10, decimal_places=5,null=True,blank=True)
     close = models.DecimalField(max_digits=10, decimal_places=5,null=True,blank=True)
     volume = models.IntegerField(null=True,blank=True)
+    stock = models.ForeignKey(Stock,on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         # stringify datetime to print
@@ -127,5 +148,13 @@ class Record(models.Model):
                     break
         return return_list
 
-        
+# ---------------
+# signal handling
+# ---------------
+# create Person object when User is created
+@receiver(post_save, sender=User)
+def user_created(sender, instance, created, **kwargs):
+    if created:
+        object = Person(user=instance,username=instance.username,email=instance.email)
+        object.save()
 
