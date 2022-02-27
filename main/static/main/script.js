@@ -1,7 +1,4 @@
 
-document.addEventListener("DOMContentLoaded", function(){
 
-
-  });
 
   

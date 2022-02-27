@@ -1,18 +1,19 @@
 {% extends 'main/main.html' %}
 
 {%block content%}
-
+<div style="margin: 20px 0px 0px 60px">
 <h1>Login</h1>
 <h3 style="color:red">{{error_message}}</h3>
 <form action={% url 'login' %} method="POST" >
     {% csrf_token %}
-    <label for="username">Username:</label>
-    <input type="text" name="username" value="" id="username"> <br/>
+    <label for="username" >Username:</label>
+    <input type="text" name="username" value="" id="username" style="margin: 10px 0px 2px 0px"> <br/>
     <label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password"> <br/>
-    <input type="submit" value="Submit"/>
+    <input type="password" name="password" value="" id="password" style="margin: 2px 0px 10px 0px"> <br/>
+    <input type="submit" value="Submit" class='btn-notif' style='margin: 5px 0px 5px 0px'/>
 </form>
 <a href="{% url 'create_account' %}">Create Account</a>
+</div>
 
 
 

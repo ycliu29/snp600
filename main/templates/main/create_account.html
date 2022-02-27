@@ -1,22 +1,22 @@
 {% extends 'main/main.html' %}
 
 {%block content%}
-
+<div style="margin: 20px 0px 20px 60px">
 <h1>Create Account</h1>
 <h3 style="color:red">{{error_message}}</h3>
 <form action={% url 'create_account' %} method="POST" >
     {% csrf_token %}
     <label for="username">Username:</label>
-    <input type="text" name="username" value="" id="username"> <br/>
+    <input type="text" name="username" value="" id="username" style="margin:10px 0px 1px 0px"> <br/>
     <label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password"> <br/>
+    <input type="password" name="password" value="" id="password" style="margin:2px 0px 2px 0px"> <br/>
     <label for="password_confirmation">Password Confirmation:</label>
-    <input type="password" name="password_confirmation" value="" id="password_confirmation"> <br/>
+    <input type="password" name="password_confirmation" value="" id="password_confirmation" style="margin:2px 0px 2px 0px"> <br/>
     <label for="email">Email:</label>
-    <input type="email" name="email" value="" id="email"> <br/>
-    <input type="submit" value="Create"/>
+    <input type="email" name="email" value="" id="email" style="margin:2px 0px 2px 0px"> <br/>
+    <input type="submit" value="Create" class='btn-notif'/>
 </form>
-
+</div>
 
 
 {%endblock%}

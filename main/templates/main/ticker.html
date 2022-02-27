@@ -4,9 +4,21 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'main/ticker_script.js' %}" ></script>
 
-    <h3>{{ticker}} | Last 7 trading days</h3>
+<div class='ticker_div'>
+    <h3>{{ticker}}</h3>
     <h5>Currency in USD</h5>
-
+    <div class='ticker_follow_button'>
+        {%if if_stock_in_watchlist is True%}
+            <button data-ticker="{{ticker}}" class="btn-follow">Unfollow</button>
+        {%elif if_stock_in_watchlist is False%}
+            <button data-ticker="{{ticker}}" class="btn-follow">Follow</button>
+        {%endif%}
+        {%if if_stock_in_notification_list is True%}
+            <button data-ticker="{{ticker}}" class="btn-notif">Cancel Notification</button>
+        {%elif if_stock_in_notification_list is False%}
+            <button data-ticker="{{ticker}}" class="btn-notif">Get Notification</button>
+        {%endif%}
+    </div>
     <!-- l30d price/volume chart display -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <container class="detail_chart_container">
@@ -14,6 +26,7 @@
     </container>    
 
     <br>
+    <h4 style="margin: 10px 0px 10px 0px">Last 7 trading days</h4>
     <table class="detail_tb">
         <thead>
             <tr>
@@ -38,7 +51,7 @@
             {%endfor%}
         </tbody>
     </table>
-    
+</div>
     <!-- data for chart usage -->
     {{ last_30_trading_dates|json_script:"last_30_trading_dates" }}
     {{ last_30_close_price|json_script:"last_30_close_price"}}

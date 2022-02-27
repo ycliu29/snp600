@@ -1,0 +1,57 @@
+{% extends 'main/main.html' %}
+{% load main_extras %}
+{% load humanize %}
+
+{%block content%}
+<h3 style="margin: 20px 0px 10px 60px;">Latest record date: {{latest_record_date}}</h3>
+<container class="following_container">
+<div class="index_chart">
+    {% if not following_stocks %}
+        <h3>You have not followed any stock</h3>
+    {% else %}
+    <table class="index_tb">
+        <thead>
+            <h4>Following stocks</h4>
+        </thead>
+        <tbody>
+            {%for key, value in following_stocks.items%}
+                <tr>
+                    <th><a href="{%url 'detailed_view' key %}">{{key}}</a></th>
+                    {%if value > 0%}
+                    <td class='index_positive'>{{value|to_percentage:2}}%</td>
+                    {%elif value < 0%}
+                    <td class='index_negative'><a>{{value|to_percentage:2}}%</td>
+                    {%endif%}
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+<div class="index_chart">
+    <table class="index_tb">
+        {% if not notification_stocks %}
+        <h3>You have not turned on notification of any stock</h3>
+         {% else %}
+        <thead>
+            <h4>Stocks in notification list</h4>
+        </thead>
+        <tbody>
+            {%for key, value in notification_stocks.items%}
+                <tr>
+                    <th><a href="{%url 'detailed_view' key %}">{{key}}</a></th>
+                    {%if value > 0%}
+                    <td class='index_positive'>{{value|to_percentage:2}}%</td>
+                    {%elif value < 0%}
+                    <td class='index_negative'><a>{{value|to_percentage:2}}%</td>
+                    {%endif%}
+                </tr>
+            {%endfor%}
+        </tbody>
+        {%endif%}
+    </table>
+</div>
+
+</container>
+
+{%endblock%}

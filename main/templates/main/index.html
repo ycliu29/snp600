@@ -13,7 +13,6 @@
             </thead>
             <tbody>
                 {%for key, value in top_growth_dict.items%}
-                
                     <tr>
                         <th><a href="{%url 'detailed_view' key %}">{{key}}</a></th>
                         {%if value > 0%}

@@ -1,8 +1,12 @@
+from genericpath import exists
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from .models import Record
+from django.http import JsonResponse
+import json
+from .models import Record, Person, Stock
 
 def login_user(request):
     if request.method == "POST":
@@ -53,7 +57,6 @@ def create_account(request):
         elif not request.user.is_authenticated:
             return render(request, 'main/create_account.html')
 
-
 # returning 3 dictionaries to template | top growth/decline/volume | plus latest record date
 def index(request):
     # calling methods to get full dictionaries
@@ -70,14 +73,82 @@ def index(request):
     })
 
 def detailed_view(request, ticker):
-
     return_list = Record.objects.filter(ticker=ticker)[0].last7d_records
     last_30_trading_dates = Record.objects.filter(ticker=ticker)[0].last_30_trading_dates
     last_30_close_price = Record.objects.filter(ticker=ticker)[0].last_30_close_price
+    try:
+        if_stock_in_watchlist = Person.objects.get(username=request.user.username).stock_in_watchlist(request.user.username, ticker)
+    except Person.DoesNotExist:
+        if_stock_in_watchlist = ""
+    try: 
+        if_stock_in_notification_list = Person.objects.get(username=request.user.username).stock_in_notification_list(request.user.username, ticker)
+    except Person.DoesNotExist:
+        if_stock_in_notification_list = ""
     return render(request,'main/ticker.html',{
         'ticker': ticker,
         'return_list': return_list,
         # reverse the list as the lists were start generated from the latest dates
         'last_30_trading_dates': last_30_trading_dates[::-1],
-        "last_30_close_price": last_30_close_price[::-1]
+        "last_30_close_price": last_30_close_price[::-1],
+        "if_stock_in_watchlist": if_stock_in_watchlist,
+        "if_stock_in_notification_list": if_stock_in_notification_list
     })
+
+@login_required
+def following(request):
+    username = request.user.username
+    person = Person.objects.get(username=username)
+    following_stocks = person.sorted_following_stocks(username)
+    notification_stocks = person.sorted_notification_stocks(username)
+    latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
+    
+    return render(request, 'main/following.html',{
+        'following_stocks': following_stocks,
+        'notification_stocks': notification_stocks,
+        'latest_record_date': latest_record_date
+    })
+
+# api routes
+def update_follow(request): 
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = data['user']
+        ticker = data['ticker']
+        person_model = Person.objects.get(username=user)
+        stock_model = Stock.objects.get(ticker = ticker)
+
+        if Person.objects.filter(username=user).filter(watchlist=stock_model).exists():
+            person_model.watchlist.remove(stock_model)
+            response = 'removed'
+            return JsonResponse(response, safe=False)
+        elif not Person.objects.filter(username=user).filter(watchlist=stock_model).exists():
+            person_model.watchlist.add(stock_model)
+            response = 'added'
+            return JsonResponse(response, safe=False)
+    else:
+        return JsonResponse('Incorrect user flow, please return to mainpage', safe=False)
+
+def update_notification_list(request): 
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user = data['user']
+        ticker = data['ticker']
+        person_model = Person.objects.get(username=user)
+        stock_model = Stock.objects.get(ticker = ticker)
+
+        if Person.objects.filter(username=user).filter(notification_list=stock_model).exists():
+            person_model.notification_list.remove(stock_model)
+            response = 'removed'
+            return JsonResponse(response, safe=False)
+        elif not Person.objects.filter(username=user).filter(notification_list=stock_model).exists():
+            person_model.notification_list.add(stock_model)
+            response = 'added'
+            return JsonResponse(response, safe=False)
+    else:
+        return JsonResponse('Incorrect user flow, please return to mainpage', safe=False)
+
+
+        
+    
+
+    
