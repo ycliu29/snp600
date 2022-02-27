@@ -101,11 +101,13 @@ def following(request):
     following_stocks = person.sorted_following_stocks(username)
     notification_stocks = person.sorted_notification_stocks(username)
     latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
+    test = Record.objects.filter(ticker='AAPL')[0].sorted_high_valotility_dict()
     
     return render(request, 'main/following.html',{
         'following_stocks': following_stocks,
         'notification_stocks': notification_stocks,
-        'latest_record_date': latest_record_date
+        'latest_record_date': latest_record_date,
+        'test': test
     })
 
 # api routes
@@ -119,10 +121,12 @@ def update_follow(request):
 
         if Person.objects.filter(username=user).filter(watchlist=stock_model).exists():
             person_model.watchlist.remove(stock_model)
+            stock_model.in_watchlist.remove(person_model)
             response = 'removed'
             return JsonResponse(response, safe=False)
         elif not Person.objects.filter(username=user).filter(watchlist=stock_model).exists():
             person_model.watchlist.add(stock_model)
+            stock_model.in_watchlist.add(person_model)
             response = 'added'
             return JsonResponse(response, safe=False)
     else:
@@ -138,10 +142,12 @@ def update_notification_list(request):
 
         if Person.objects.filter(username=user).filter(notification_list=stock_model).exists():
             person_model.notification_list.remove(stock_model)
+            stock_model.in_notification_list.remove(person_model)
             response = 'removed'
             return JsonResponse(response, safe=False)
         elif not Person.objects.filter(username=user).filter(notification_list=stock_model).exists():
             person_model.notification_list.add(stock_model)
+            stock_model.in_notification_list.add(person_model)
             response = 'added'
             return JsonResponse(response, safe=False)
     else:

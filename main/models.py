@@ -9,6 +9,8 @@ from django.dispatch import receiver
 
 class Stock(models.Model):
     ticker = models.CharField(max_length=10, null=True, blank=True)
+    in_watchlist = models.ManyToManyField('Person',related_name='in_watchlist',blank=True)
+    in_notification_list = models.ManyToManyField('Person',related_name='in_notification_list',blank=True)
 
     def __str__(self):
         return self.ticker
@@ -17,8 +19,8 @@ class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(null=True,blank=True)
-    watchlist = models.ManyToManyField(Stock,related_name='watchlist',null=True, blank=True)
-    notification_list= models.ManyToManyField(Stock,related_name='notification',null=True, blank=True)
+    watchlist = models.ManyToManyField(Stock,related_name='watchlist', blank=True)
+    notification_list= models.ManyToManyField(Stock,related_name='notification', blank=True)
 
     def __str__(self):
         string = self.username + "(Person)"
@@ -29,7 +31,6 @@ class Person(models.Model):
         latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
         person = Person.objects.get(username=username)
         for ticker in person.watchlist.all():
-            print(ticker)
             # if == 0 is triggered, need to look into specail events(might be index change)
             if len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date)) == 0:
                 print("error: " + ticker)
@@ -43,7 +44,6 @@ class Person(models.Model):
         latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
         person = Person.objects.get(username=username)
         for ticker in person.notification_list.all():
-            print(ticker)
             # if == 0 is triggered, need to look into specail events(might be index change)
             if len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date)) == 0:
                 print("error: " + ticker)
@@ -52,7 +52,6 @@ class Person(models.Model):
         sorted_price_change_dict = dict(sorted(price_change_dict.items(),key=lambda item:item[1],reverse=True))
         return sorted_price_change_dict
 
-    
     # pass in username and ticker to check if the stock(ticker) is in this person's watchlist
     def stock_in_watchlist(self, username, ticker):
         stock_obj = Stock.objects.get(ticker=ticker)
@@ -140,6 +139,27 @@ class Record(models.Model):
         return_dict = {}
         for i in range(return_items):
             return_dict[list(sorted_volume_dict.items())[i][0]] = list(sorted_volume_dict.items())[i][1]
+        return return_dict
+
+    # return a sorted dict of stocks that fluctuates more than 5%(of closing price).
+    def sorted_high_valotility_dict(self):
+        high_volatility_dict = {}
+        latest_record_date = self.latest_record_date
+        for ticker in TICKERS:
+            # if == 0 is triggered, need to look into specail events(might be index change)
+            if len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date)) == 0:
+                print("error: " + ticker)
+            elif len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date))>0:
+                if Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change >= 0.05 or Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change <= (-0.05):
+                    high_volatility_dict[ticker] = Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change
+                else:
+                    pass
+        sorted_high_volatility_dict = dict(sorted(high_volatility_dict.items(),key=lambda item:item[1],reverse=True))
+        l = list(sorted_high_volatility_dict.items())
+
+        return_dict = {}
+        for i in range(len(l)):
+            return_dict[l[i][0]] = l[i][1]
         return return_dict
 
     # find the latest record date by looping from today up to 19 days ago
