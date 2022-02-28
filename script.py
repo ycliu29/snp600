@@ -11,7 +11,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'snp600.settings')
 django.setup()
 
 from datetime import date
-from main.models import Record, Stock
+from main.models import Record, Stock, Person
 from csv import reader
 
 # import stock tickers(array) from main/tickers.py
@@ -65,8 +65,17 @@ def update_model():
                     if not Record.objects.filter(ticker=new_record.ticker).filter(date=new_record.date):
                         new_record.save()
 
+# TODO finish function
+# 4. query hgih volatility stocks and send out email
+# send out email / query high volatility stocks functions written in models
+def high_volatility_notif():
+    stock = Stock.objects.get(ticker='AMD').email_notification()
+#     test = Record.objects.filter(ticker='AAPL')[0].sorted_high_valotility_dict()
+    return print(stock)
+
 # ---
 # call functions
-download_csv()
-create_stock_models()
-update_model()
+# download_csv()
+# create_stock_models()
+# update_model()
+high_volatility_notif()

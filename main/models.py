@@ -5,8 +5,8 @@ from .tickers import TICKERS
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
 
+# Create your models here.
 class Stock(models.Model):
     ticker = models.CharField(max_length=10, null=True, blank=True)
     in_watchlist = models.ManyToManyField('Person',related_name='in_watchlist',blank=True)
@@ -14,6 +14,17 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.ticker
+
+    # TODO finish email function
+    # send volatility email notif to Person in notification field
+    def email_notification(self):
+        notif_list = self.in_notification_list
+        # check if there's any r/s in the field
+        if notif_list.exists():
+            person_list = self.in_notification_list.all()
+            for person in person_list:
+                print(person.username)
+            return person_list
 
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -49,8 +60,8 @@ class Person(models.Model):
                 print("error: " + ticker)
             elif len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date))>0:
                 price_change_dict[ticker] = Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change
-        sorted_price_change_dict = dict(sorted(price_change_dict.items(),key=lambda item:item[1],reverse=True))
-        return sorted_price_change_dict
+        sorted_notification_stocks = dict(sorted(price_change_dict.items(),key=lambda item:item[1],reverse=True))
+        return sorted_notification_stocks
 
     # pass in username and ticker to check if the stock(ticker) is in this person's watchlist
     def stock_in_watchlist(self, username, ticker):
