@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .tickers import TICKERS
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your models here.
@@ -15,17 +17,28 @@ class Stock(models.Model):
     def __str__(self):
         return self.ticker
 
-    # TODO finish email function
     # send volatility email notif to Person in notification field
     def email_notification(self):
         notif_list = self.in_notification_list
         # check if there's any r/s in the field
         if notif_list.exists():
+            latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
+            price_change = Record.objects.filter(ticker=self.ticker).filter(date=latest_record_date)[0].daily_change
+            mail_title = self.ticker + ' volatility notification'
+            mail_content = self.ticker + '\'s colsed price changed ' + str(round(price_change * 100,2))+'% in the last trading day, we\'re informing you with this email(from S&P500 Tracker).'
             person_list = self.in_notification_list.all()
-            for person in person_list:
-                print(person.username)
-            return person_list
-
+            receipient_list =[]
+            for person in person_list: 
+                receipient_list.append(person.email)
+            send_mail(
+                mail_title,
+                mail_content,
+                settings.EMAIL_HOST_USER,
+                receipient_list
+            )
+        else:
+            pass
+                           
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=200, null=True, blank=True)
@@ -79,7 +92,6 @@ class Person(models.Model):
             return True
         elif not person.filter(notification_list=stock_obj).exists():
             return False
-
 
 class Record(models.Model):
     ticker = models.CharField(max_length=10, null=True, blank=True)

@@ -13,6 +13,8 @@ django.setup()
 from datetime import date
 from main.models import Record, Stock, Person
 from csv import reader
+from django.core.mail import send_mail
+from django.conf import settings
 
 # import stock tickers(array) from main/tickers.py
 from main.tickers import TICKERS
@@ -69,13 +71,15 @@ def update_model():
 # 4. query hgih volatility stocks and send out email
 # send out email / query high volatility stocks functions written in models
 def high_volatility_notif():
-    stock = Stock.objects.get(ticker='AMD').email_notification()
-#     test = Record.objects.filter(ticker='AAPL')[0].sorted_high_valotility_dict()
-    return print(stock)
+    # get sorted ticker/price change dict from models
+    test = Record.objects.filter(ticker='AAPL')[0].sorted_high_valotility_dict()
+    for key, value in list(test.items()):
+        Stock.objects.get(ticker=key).email_notification()
+    return print(list(test.items()))
 
 # ---
 # call functions
 download_csv()
 create_stock_models()
 update_model()
-# high_volatility_notif()
+high_volatility_notif()
