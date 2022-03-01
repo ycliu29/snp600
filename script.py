@@ -75,7 +75,7 @@ def high_volatility_notif():
 
 # ---
 # call functions
-# download_csv()
-# create_stock_models()
-# update_model()
-high_volatility_notif()
+download_csv()
+create_stock_models()
+update_model()
+# high_volatility_notif()

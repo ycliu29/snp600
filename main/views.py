@@ -101,13 +101,13 @@ def following(request):
     following_stocks = person.sorted_following_stocks(username)
     notification_stocks = person.sorted_notification_stocks(username)
     latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
-    test = Record.objects.filter(ticker='AAPL')[0].sorted_high_valotility_dict()
+    # test = Record.objects.filter(ticker='AAPL')[0].sorted_high_valotility_dict()
     
     return render(request, 'main/following.html',{
         'following_stocks': following_stocks,
         'notification_stocks': notification_stocks,
         'latest_record_date': latest_record_date,
-        'test': test
+        # 'test': test
     })
 
 # api routes
