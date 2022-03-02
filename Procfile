@@ -1,0 +1,1 @@
+web gunicorn snp600.wsgi --log-file -
