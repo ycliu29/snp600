@@ -5,20 +5,32 @@
 <script type="text/javascript" src="{% static 'main/ticker_script.js' %}" ></script>
 
 <div class='ticker_div'>
-    <h3>{{ticker}}</h3>
-    <h5>Currency in USD</h5>
+    <h2>{{ticker}}</h2>
+    <h4>Currency in USD</h4>
+    {% if user.is_authenticated %}
     <div class='ticker_follow_button'>
+        <div class="tooltip">
         {%if if_stock_in_watchlist is True%}
             <button data-ticker="{{ticker}}" class="btn-follow">Unfollow</button>
         {%elif if_stock_in_watchlist is False%}
             <button data-ticker="{{ticker}}" class="btn-follow">Follow</button>
         {%endif%}
+            <span class="tooltip_text">Follow the stock for easier navigation at the Following page.</span>
+        </div>
+        <div class="tooltip">
         {%if if_stock_in_notification_list is True%}
             <button data-ticker="{{ticker}}" class="btn-notif">Cancel Notification</button>
         {%elif if_stock_in_notification_list is False%}
             <button data-ticker="{{ticker}}" class="btn-notif">Get Notification</button>
         {%endif%}
+            <span class="tooltip_text">We'll notify you if daily closed price changes more than 5% via email.</span>
+        </div>
+        <div class="tooltip">
+            <button data-ticker="{{ticker}}" class="btn-notif-test">Test Notification</button>
+            <span class="tooltip_text">Receive a test email to unserstand how notification works.</span>
+        </div>
     </div>
+    {%endif%}
     <!-- l30d price/volume chart display -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <container class="detail_chart_container">

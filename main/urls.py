@@ -13,5 +13,6 @@ urlpatterns = [
     path('following/',views.following,name='following'),
     # db update apis
     path('update_follow/',views.update_follow,name='update_follow'),
-    path('update_notification_list/',views.update_notification_list,name='update_notification_list')
+    path('update_notification_list/',views.update_notification_list,name='update_notification_list'),
+    path('test_notification/',views.test_notification,name='test_notification')
 ]

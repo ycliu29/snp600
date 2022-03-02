@@ -136,7 +136,7 @@ nav ul li a.active, nav ul li a:hover{
 .ticker_follow_button{
     padding:10px 0px 10px 0px
 }
-.btn-follow, .btn-notif{
+.btn-follow, .btn-notif, .btn-notif-test{
     background-color: #6688CC; /* Green */
     border: none;
     color: white;
@@ -148,8 +148,8 @@ nav ul li a.active, nav ul li a:hover{
     border-radius: 4px;
 }
 
-.btn-follow:hover, .btn-notif:hover{
-    background-color: #2b5bbb; /* Green */
+.btn-follow:hover, .btn-notif:hover, .btn-notif-test:hover{
+    background-color: #182978; /* Green */
     border: none;
     color: #6688CC
     padding: 8px 16px;
@@ -162,12 +162,46 @@ nav ul li a.active, nav ul li a:hover{
     cursor:pointer
 }
 
-/* color palette #182978 #6688CC #ACBFE6 */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+    font-size: 16px;
+  }
+  
+.tooltip .tooltip_text {
+visibility: visible;
+opacity: 0;
+padding: 0.25em 0.5em;
+background-color: #182978;
+color: #fff;
+text-align: center;
+border-radius: 0.25em;
+white-space: nowrap;
+margin:0.1em 0em;
+
+/* Position the tooltip */
+position: absolute;
+z-index: 1;
+top: 100%;
+left: 0%;
+transition-property: visibility;
+transition: 0s;
+}
+
+.tooltip:hover .tooltip_text {
+visibility: visible;
+transition-duration: 0.8s;
+opacity:1;
+}
+
+
+
 .detail_tb th, .detail_tb td { padding: 0.35rem;border: solid 0.07rem rgb(171, 171, 171); }
 .detail_tb th { background-color: rgba(255, 174, 74, 0.2); font-size: 16px;}
 .detail_tb td {font-size:14px}
 .detail_tb {border-collapse: collapse; width: 550px;text-align: center; }
-.detail_chart_container {max-width: 550px;max-height: 250px;}
+.detail_chart_container {max-width: 550px;max-height: 250px;margin: 300px}
 
 /* following page */
 .following_container {

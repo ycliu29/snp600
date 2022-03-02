@@ -1,3 +1,5 @@
+# NOT IN USE!! Moved to "main/management/commands/data_update"
+
 # script functions
 # 1. call yfinance api to update the csvs in /main/data
 # 2. populate Record classes in django
@@ -82,4 +84,4 @@ def high_volatility_notif():
 download_csv()
 create_stock_models()
 update_model()
-high_volatility_notif()
+# high_volatility_notif()

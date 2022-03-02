@@ -39,6 +39,13 @@ document.addEventListener("DOMContentLoaded", function(){
     // TODO: write fetch functions and follow view(what's api view?)
     followbtn = document.querySelector(".btn-follow")
     notifbtn = document.querySelector(".btn-notif")
+    notif_testbtn = document.querySelector(".btn-notif-test")
+
+    notif_testbtn.addEventListener('click',function(){
+        var ticker = this.dataset.ticker
+        test_notification(ticker)
+    })
+
     followbtn.addEventListener('click',function(){
         var ticker = this.dataset.ticker
         update_follow(ticker)
@@ -47,6 +54,25 @@ document.addEventListener("DOMContentLoaded", function(){
         var ticker = this.dataset.ticker
         update_notification_list(ticker)
     })
+
+
+    function test_notification(ticker){
+        var url = '/test_notification/'
+        fetch(url,{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({'user': user,'ticker': ticker})
+        })
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+            alert('Test email has been sent.')
+        })
+    }
 
     function update_follow(ticker){
         var followbtn = document.querySelector(".btn-follow")

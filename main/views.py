@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from django.http import JsonResponse
 import json
 from .models import Record, Person, Stock
+from django.core.mail import send_mail
+from django.conf import settings
 
 def login_user(request):
     if request.method == "POST":
@@ -111,6 +113,7 @@ def following(request):
     })
 
 # api routes
+@login_required
 def update_follow(request): 
     if request.method == "POST":
         data = json.loads(request.body)
@@ -132,6 +135,7 @@ def update_follow(request):
     else:
         return JsonResponse('Incorrect user flow, please return to mainpage', safe=False)
 
+@login_required
 def update_notification_list(request): 
     if request.method == "POST":
         data = json.loads(request.body)
@@ -152,6 +156,27 @@ def update_notification_list(request):
             return JsonResponse(response, safe=False)
     else:
         return JsonResponse('Incorrect user flow, please return to mainpage', safe=False)
+
+@login_required
+def test_notification(request):
+    if request.method== "POST":
+        data = json.loads(request.body)
+        user = data['user']
+        ticker = data['ticker']
+        latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
+        price_change = Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change
+        mail_title = ticker + ' volatility notification(test)'
+        mail_content = 'THIS IS A TEST EMAIL. ' + ticker + '\'s colsed price changed ' + str(round(price_change * 100,2))+'% in the last trading day, we\'re informing you with this email(from S&P500 Tracker).'
+        receipient_list = []
+        receipient_list.append(Person.objects.get(username=user).email)
+        send_mail(
+            mail_title,
+            mail_content,
+            settings.EMAIL_HOST_USER,
+            receipient_list
+        )
+        return JsonResponse('email sent', safe=False)
+
 
 
         
