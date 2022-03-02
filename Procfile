@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath snp600 snp600.wsgi
+web: gunicorn snp600.wsgi:application --log-file - --log-level debug
