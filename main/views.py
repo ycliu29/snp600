@@ -62,10 +62,10 @@ def create_account(request):
 # returning 3 dictionaries to template | top growth/decline/volume | plus latest record date
 def index(request):
     # calling methods to get full dictionaries
-    latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
-    top_growth_dict = Record.objects.filter(ticker='AAPL')[0].sorted_price_change_dict(10)
-    most_decline_dict = Record.objects.filter(ticker='AAPL')[0].sorted_price_change_dict(-10)
-    most_traded_dict = Record.objects.filter(ticker='AAPL')[0].sorted_volume_dict(10)
+    latest_record_date = Record.objects.get(ticker='AAPL',date="2021-12-01").latest_record_date
+    top_growth_dict = Record.objects.get(ticker='AAPL',date="2021-12-01").sorted_price_change_dict(10)
+    most_decline_dict = Record.objects.get(ticker='AAPL',date="2021-12-01").sorted_price_change_dict(-10)
+    most_traded_dict = Record.objects.get(ticker='AAPL',date="2021-12-01").sorted_volume_dict(10)
 
     return render(request, 'main/index.html',{
         'top_growth_dict': top_growth_dict,
