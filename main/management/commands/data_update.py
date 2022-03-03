@@ -14,7 +14,7 @@ from django.conf import settings
 # import stock tickers(array) from main/tickers.py
 from main.tickers import TICKERS
 
-
+# SET daily command to update websit info using Heroku scheduler
 class Command(BaseCommand):
     def handle(self, *args, **options):
         

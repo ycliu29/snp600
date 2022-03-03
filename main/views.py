@@ -74,6 +74,7 @@ def index(request):
         'latest_record_date': latest_record_date
     })
 
+# handle individual stock page
 def detailed_view(request, ticker):
     return_list = Record.objects.filter(ticker=ticker)[0].last7d_records
     last_30_trading_dates = Record.objects.filter(ticker=ticker)[0].last_30_trading_dates

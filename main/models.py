@@ -50,6 +50,7 @@ class Person(models.Model):
         string = self.username + "(Person)"
         return string
 
+    # return dict with following stocks and price change
     def sorted_following_stocks(request, username):
         price_change_dict = {}
         latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
@@ -63,6 +64,7 @@ class Person(models.Model):
         sorted_price_change_dict = dict(sorted(price_change_dict.items(),key=lambda item:item[1],reverse=True))
         return sorted_price_change_dict
 
+    # return dict with notification stocks and price change
     def sorted_notification_stocks(request, username):
         price_change_dict = {}
         latest_record_date = Record.objects.filter(ticker='AAPL')[0].latest_record_date
@@ -85,6 +87,7 @@ class Person(models.Model):
         elif not person.filter(watchlist=stock_obj).exists():
             return False
 
+    # check if stock object is in person's notification_list field
     def stock_in_notification_list(self, username, ticker):
         stock_obj = Stock.objects.get(ticker=ticker)
         person = Person.objects.filter(username=username)
