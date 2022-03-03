@@ -70,7 +70,7 @@ class Person(models.Model):
         for ticker in person.notification_list.all():
             # if == 0 is triggered, need to look into specail events(might be index change)
             if len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date)) == 0:
-                print("error: " + ticker)
+                print("error: " + ticker + latest_record_date + " data missing")
             elif len(Record.objects.filter(ticker=ticker).filter(date=latest_record_date))>0:
                 price_change_dict[ticker] = Record.objects.filter(ticker=ticker).filter(date=latest_record_date)[0].daily_change
         sorted_notification_stocks = dict(sorted(price_change_dict.items(),key=lambda item:item[1],reverse=True))
