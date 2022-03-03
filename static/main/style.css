@@ -18,7 +18,7 @@ body{
 nav{
     background: #182978;
     height:4rem;
-    width:105%;
+    width:107%;
 }
 
 label.logo{
@@ -31,7 +31,7 @@ label.logo{
 
 nav ul {
     float: right;
-    margin-right: 80px;
+    margin-right: 95px;
 }
 
 nav ul li {
@@ -76,6 +76,7 @@ nav ul li a.active, nav ul li a:hover{
     nav ul li a {
         font-size: 21px;
         text-decoration: none;
+        margin-right: 95px;
     }
 }
 
@@ -102,6 +103,7 @@ nav ul li a.active, nav ul li a:hover{
     nav ul li a {
         font-size:23px;
         text-decoration: none;
+        margin-right: 95px;
     }
     nav ul li a:hover,a.active{
         background: none;
