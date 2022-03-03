@@ -9,26 +9,20 @@
     <h4>Currency in USD</h4>
     {% if user.is_authenticated %}
     <div class='ticker_follow_button'>
-        <div class="tooltip">
         {%if if_stock_in_watchlist is True%}
             <button data-ticker="{{ticker}}" class="btn-follow">Unfollow</button>
         {%elif if_stock_in_watchlist is False%}
             <button data-ticker="{{ticker}}" class="btn-follow">Follow</button>
         {%endif%}
-            <span class="tooltip_text">Follow the stock for easier navigation at the Following page.</span>
-        </div>
-        <div class="tooltip">
         {%if if_stock_in_notification_list is True%}
             <button data-ticker="{{ticker}}" class="btn-notif">Cancel Notification</button>
         {%elif if_stock_in_notification_list is False%}
             <button data-ticker="{{ticker}}" class="btn-notif">Get Notification</button>
         {%endif%}
-            <span class="tooltip_text">We'll notify you if daily closed price changes more than 5% via email.</span>
-        </div>
-        <div class="tooltip">
-            <button data-ticker="{{ticker}}" class="btn-notif-test">Test Notification</button>
-            <span class="tooltip_text">Receive a test email to unserstand how notification works.</span>
-        </div>
+        <button data-ticker="{{ticker}}" class="btn-notif-test">Test Notification</button>
+    </div>
+    <div style="font-size: 12px; margin: 5px 0px">
+        Hint: Turn on notification to be notified via email when closed price changes more than 5% from the previous trading day.(You can also test it out.)
     </div>
     {%endif%}
     <!-- l30d price/volume chart display -->

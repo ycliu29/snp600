@@ -5,18 +5,20 @@
     margin: 0;
     list-style: none;
     box-sizing: border-box;
+    
   }
 
 
 body{
     font-size: 18px;
     font-family: 'Nunito', sans-serif;font-family: 'Roboto', sans-serif;
+
 }
 
 nav{
     background: #182978;
     height:4rem;
-    width:100%;
+    width:105%;
 }
 
 label.logo{
@@ -29,7 +31,7 @@ label.logo{
 
 nav ul {
     float: right;
-    margin-right: 20px;
+    margin-right: 80px;
 }
 
 nav ul li {
@@ -90,6 +92,7 @@ nav ul li a.active, nav ul li a:hover{
         left: -115%;
         text-align: center;
         transition: all .5s;
+        z-index:5
     }
     nav ul li {
         display: block;
@@ -106,6 +109,8 @@ nav ul li a.active, nav ul li a:hover{
     }
     #check:checked ~ ul {
         left:0;
+        text-align: left;
+        padding: 0px 0px 0px 50px;
     }
 }
 
@@ -131,7 +136,8 @@ nav ul li a.active, nav ul li a:hover{
 
 /* detail template */
 .ticker_div {
-    margin: 20px 0px 0px 60px
+    margin: 20px 0px 0px 20px;
+    min-width: 250px;
 }
 .ticker_follow_button{
     padding:10px 0px 10px 0px
@@ -167,6 +173,7 @@ nav ul li a.active, nav ul li a:hover{
     display: inline-block;
     cursor: default;
     font-size: 16px;
+    z-index:0;
   }
   
 .tooltip .tooltip_text {
@@ -182,7 +189,7 @@ margin:0.1em 0em;
 
 /* Position the tooltip */
 position: absolute;
-z-index: 1;
+z-index: 0;
 top: 100%;
 left: 0%;
 transition-property: visibility;
@@ -200,13 +207,13 @@ opacity:1;
 .detail_tb th, .detail_tb td { padding: 0.35rem;border: solid 0.07rem rgb(171, 171, 171); }
 .detail_tb th { background-color: rgba(255, 174, 74, 0.2); font-size: 16px;}
 .detail_tb td {font-size:14px}
-.detail_tb {border-collapse: collapse; width: 550px;text-align: center; }
-.detail_chart_container {max-width: 550px;max-height: 250px;margin: 300px}
+.detail_tb {border-collapse: collapse; max-width: 700px;min-width:100px;text-align: center; }
+.detail_chart_container {max-width: 500px;max-height: 250px;min-width: 200px;}
 
 /* following page */
 .following_container {
     display: flex; 
     flex-wrap:wrap;
-    margin: 0px 10px 10px 50px; 
+    margin: 0px 10px 10px 20px; 
     /* margin top right button left */
 }
