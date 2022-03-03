@@ -1,0 +1,212 @@
+/* color palette #182978 #6688CC #ACBFE6 */
+/* general attributes */
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-sizing: border-box;
+  }
+
+
+body{
+    font-size: 18px;
+    font-family: 'Nunito', sans-serif;font-family: 'Roboto', sans-serif;
+}
+
+nav{
+    background: #182978;
+    height:4rem;
+    width:100%;
+}
+
+label.logo{
+    color:white;
+    font-size:30px;
+    line-height: 80px;
+    padding:0 60px;
+    font-weight: bold;
+}
+
+nav ul {
+    float: right;
+    margin-right: 20px;
+}
+
+nav ul li {
+    display:inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+nav ul li a {
+    color:white;
+    font-size: 21px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+nav ul li a.active, nav ul li a:hover{
+    color:#ACBFE6;
+    transition: .5s;
+}
+
+.checkbtn{
+    font-size:30px;
+    color:white;
+    float:right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display:none;
+}
+
+#check{
+    display:none;
+}
+
+@media(max-width:952px){
+    label.logo{
+        font-size: 30px;
+        padding-left: 60px;
+    }
+    nav ul li a {
+        font-size: 21px;
+        text-decoration: none;
+    }
+}
+
+@media(max-width:950px){
+    .checkbtn{
+        display:block;
+    }
+    ul{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #6688CC;
+        top: 80px;
+        left: -115%;
+        text-align: center;
+        transition: all .5s;
+    }
+    nav ul li {
+        display: block;
+        margin: 50px 0;
+        line-height: 20px;
+    }
+    nav ul li a {
+        font-size:23px;
+        text-decoration: none;
+    }
+    nav ul li a:hover,a.active{
+        background: none;
+        color:#ACBFE6
+    }
+    #check:checked ~ ul {
+        left:0;
+    }
+}
+
+
+
+/* template attributes */
+
+
+/* index template */
+.index_container {
+    display: flex; 
+    flex-wrap:wrap;
+    margin: 0px 10px 10px 50px; 
+    /* margin top right button left */
+}
+.index_chart{min-width: 350px; margin: 10px;}
+
+.index_tb {width:80%}
+.index_tb th {text-align: left;}
+.index_tb td {text-align: right}
+.index_positive { color:rgb(0, 176, 0)}
+.index_negative { color: red}
+
+/* detail template */
+.ticker_div {
+    margin: 20px 0px 0px 60px
+}
+.ticker_follow_button{
+    padding:10px 0px 10px 0px
+}
+.btn-follow, .btn-notif, .btn-notif-test{
+    background-color: #6688CC; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    /* text-decoration: none; */
+    display: inline-block;
+    font-size: 15px;
+    border-radius: 4px;
+}
+
+.btn-follow:hover, .btn-notif:hover, .btn-notif-test:hover{
+    background-color: #182978; /* Green */
+    border: none;
+    color: #6688CC
+    padding: 8px 16px;
+    text-align: center;
+    /* text-decoration: none; */
+    display: inline-block;
+    font-size: 15px;
+    border-radius: 4px;
+    transition: .8s;
+    cursor:pointer
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+    font-size: 16px;
+  }
+  
+.tooltip .tooltip_text {
+visibility: visible;
+opacity: 0;
+padding: 0.25em 0.5em;
+background-color: #182978;
+color: #fff;
+text-align: center;
+border-radius: 0.25em;
+white-space: nowrap;
+margin:0.1em 0em;
+
+/* Position the tooltip */
+position: absolute;
+z-index: 1;
+top: 100%;
+left: 0%;
+transition-property: visibility;
+transition: 0s;
+}
+
+.tooltip:hover .tooltip_text {
+visibility: visible;
+transition-duration: 0.8s;
+opacity:1;
+}
+
+
+
+.detail_tb th, .detail_tb td { padding: 0.35rem;border: solid 0.07rem rgb(171, 171, 171); }
+.detail_tb th { background-color: rgba(255, 174, 74, 0.2); font-size: 16px;}
+.detail_tb td {font-size:14px}
+.detail_tb {border-collapse: collapse; width: 550px;text-align: center; }
+.detail_chart_container {max-width: 550px;max-height: 250px;margin: 300px}
+
+/* following page */
+.following_container {
+    display: flex; 
+    flex-wrap:wrap;
+    margin: 0px 10px 10px 50px; 
+    /* margin top right button left */
+}
