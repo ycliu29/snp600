@@ -1,4 +1,5 @@
-About
+##About##
+
 SNP500 Tracker is a web app that trakcs and update daily changes of the S&P500 component stocks. 
 The tracker displays 10 highest growth, decline and most traded stocks of the day. User can choose to follow stocks or turn on notification to receive email notif of drastic(>5%) price changes.
 
