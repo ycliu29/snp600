@@ -30,7 +30,7 @@ SNP600(project folder)
 └──Procfile, runtime.txt(files for Heroku deployment)  
 ```
 
-### Distinctiveness and Complexity ###
+### Project Details ###
 ###### Data processing
 1. Using [yfinance](https://pypi.org/project/yfinance/), I'm able to access daily data of stocks in .csv file, I then need to save, read and extract the correct data to populate (Record)models.
 2. Create model methods to sort ticker/price change dictionary, which involves data structure manipulation(dictionary->list->dictionary). For easier usage and rendering in view and template.
