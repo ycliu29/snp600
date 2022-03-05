@@ -29,7 +29,7 @@ class Command(BaseCommand):
 
             # make calls to download each ticker record
             for i in range(len(tickers)):
-                data = yf.download(tickers[i], start='2021-12-01', end=date.today())
+                data = yf.download(tickers[i], start='2022-02-01', end=date.today())
                 file_name= tickers[i]+".csv"
                 file_path=os.path.join(file_dir, csv_folder, file_name)
                 data.to_csv(file_path,index=True)
