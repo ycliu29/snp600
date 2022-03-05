@@ -9,6 +9,7 @@ import json
 from .models import Record, Person, Stock
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.cache import cache_page
 
 def login_user(request):
     if request.method == "POST":
@@ -60,6 +61,7 @@ def create_account(request):
             return render(request, 'main/create_account.html')
 
 # returning 3 dictionaries to template | top growth/decline/volume | plus latest record date
+@cache_page(60 * 60 * 12)
 def index(request):
     # calling methods to get full dictionaries
     latest_record_date = Record.objects.get(ticker='AAPL',date="2022-02-01").latest_record_date
