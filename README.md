@@ -11,8 +11,8 @@
 ### Demo ###
 SNP500 Tracker: https://ycl-snp500.herokuapp.com/
 
-測試帳號: baz
-測試密碼: baz
+測試帳號: 'baz'   
+測試密碼: 'baz'
 
 或是使用註冊功能建立新帳號
 
