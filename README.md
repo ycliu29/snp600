@@ -1,13 +1,29 @@
-### About ###
+### S&P500 資訊網 ###
 
-SNP500 Tracker is a web app that trakcs and update daily changes of the S&P500 component stocks.  
-The tracker displays 10 highest growth, decline and most traded stocks of the day. User can choose to follow stocks or turn on notification to receive email notif of drastic(>5%) price changes.
+此專案透過 [yfinance](https://pypi.org/project/yfinance/) 套件存取 Yahoo Finance 的股市交易資料，涵蓋組成 S&P500 指數的 505 檔標的，主要功能包括：
+1. 首頁，前一交易日前十交易量、漲和跌幅標的
+2. 個股頁面，使用 [chart.JS](https://www.chartjs.org/) 產出前三十交易日成交價折線圖及前七交易日詳細資訊表格
+3. 用戶註冊、登出、登入功能
+4. 用戶可選擇追蹤(follow)或取得個股通知(notification)，若標的成交價與前一交易日差距超過 5%，系統將發送通知信件
+5. 追蹤(following)頁面，顯示用戶追蹤終及開啟通知之標的列表
+6. 自訂資料更新指令(data_update)，透過排程工具（如 [Heroku Scheduler](https://elements.heroku.com/addons/scheduler)），可自動更新資料及網站
 
-### How to use ###
-After setting up env. variables (EMAIL_HOST, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_USE_TLS) this site should run fine in local or host server.
-Running 'python manage.py data_update' at project folder should update db with the latest data.
+### Demo ###
+SNP500 Tracker: https://ycl-snp500.herokuapp.com/
 
-### Directories ### 
+測試帳號: baz
+測試密碼: baz
+
+或是使用註冊功能建立新帳號
+
+### 使用技術 ### 
+- Django 後端框架
+- 原生 HTML+CSS 完成 RWD 網頁
+- 專案部署於 Heroku
+
+### 功能介紹 ### 
+
+### 專案架構 ### 
 (only listing major files)
 ```
 SNP600(project folder)   
@@ -29,32 +45,3 @@ SNP600(project folder)
 ├──requirements.txt  
 └──Procfile, runtime.txt(files for Heroku deployment)  
 ```
-
-### Project Details ###
-###### Data processing
-1. Using [yfinance](https://pypi.org/project/yfinance/), I'm able to access daily data of stocks in .csv file, I then need to save, read and extract the correct data to populate (Record)models.
-2. Create model methods to sort ticker/price change dictionary, which involves data structure manipulation(dictionary->list->dictionary). For easier usage and rendering in view and template.
-
-###### Javascript
-1. Utilising JS to render daily price/date chart with [chart.JS](https://www.chartjs.org/)
-2. Making AJAX calls to update user's Person(model) notification/following field and changes element HTML with it. 
-
-###### Others
-1. Create custom command 'main/management/commands/data_update.py to automoate data download, check Stock models, update Record and send out notification. Using scheduler add on with Herokt deplyment, the site is able to auto update itself.
-2. [Deployment](https://ycl-snp500.herokuapp.com/) at Heroku. 
-
-### Functions
-###### Data
-1. data download 
-2. check Stock models
-3. create Record models
-4. send out notification
-
-###### User
-1. Register 
-2. Login / Out
-3. Follow / Unfollow / Get notified / Cancel notification
-4. Test notification
-
-###### Display
-1. RWD
