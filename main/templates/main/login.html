@@ -4,6 +4,11 @@
 <div style="margin: 20px 0px 0px 60px">
 <h1>Login</h1>
 <h3 style="color:red">{{error_message}}</h3>
+{% if messages%}
+{%for message in messages%}
+<p style="margin: 5px 0px 5px 0px; color:red">{{message}}</p>
+{%endfor%}
+{% endif %}
 <form action={% url 'login' %} method="POST" >
     {% csrf_token %}
     <label for="username" >Username:</label>

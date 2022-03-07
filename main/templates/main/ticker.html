@@ -21,11 +21,11 @@
         {%endif%}
         <button data-ticker="{{ticker}}" class="btn-notif-test">Test Notification</button>
     </div>
-    <div style="font-size: 13px; margin: 5px 0px">
+    <div style="font-size: 13px; margin: 5px 0px;">
         Hint: Turn on notification to be notified via email when closed price changes more than 5% from the previous trading day.(You can also test it out.)
     </div>
     {% elif not user.is_authenticated%}
-    <div style="font-size: 13px; margin: 5px 0px">
+    <div style="font-size: 13px; margin: 5px 0px;color:red">
         Hint: Login to access notification and following functions.
     </div>
     {%endif%}

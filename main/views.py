@@ -10,6 +10,7 @@ from .models import Record, Person, Stock
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.decorators.cache import cache_page
+from django.contrib import messages
 
 def login_user(request):
     if request.method == "POST":
@@ -24,6 +25,9 @@ def login_user(request):
                 'error_message': "Invalid username or password, please try again."
             })
     elif request.method == "GET":
+        if 'next' in request.GET:
+            messages.add_message(request, messages.INFO, 'Login is required for this page.')
+
         return render(request, 'main/login.html')
 
 def logout_user(request):

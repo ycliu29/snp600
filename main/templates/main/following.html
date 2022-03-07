@@ -5,6 +5,12 @@
 {%block content%}
 {{test}}
 <h3 style="margin: 20px 0px 10px 30px;">Latest record date: {{latest_record_date}}</h3>
+{% if messages%}
+{%for message in messages%}
+<p>{{message}}</p>
+{%endfor%}
+{% endif %}
+
 <container class="following_container">
 <div class="index_chart">
     {% if not following_stocks %}
