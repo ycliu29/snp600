@@ -1,4 +1,4 @@
-## S&P500 資訊網 ##
+# S&P500 資訊網 #
 
 此專案透過 [yfinance](https://pypi.org/project/yfinance/) 套件存取 Yahoo Finance 的股市交易資料，涵蓋組成 S&P500 指數的 505 檔標的，主要功能包括：
 1. 首頁，顯示前一交易日前十交易量、漲和跌幅標的和個別漲跌幅、交易量
@@ -24,15 +24,18 @@ SNP500 Tracker: https://ycl-snp500.herokuapp.com/
 ### 功能介紹 ### 
 #### 首頁瀏覽 ####
 - 顯示前一交易日前十交易量、漲和跌幅標的和個別漲跌幅、交易量
+
 ![Screen Shot 2022-03-07 at 8 03 17 PM](https://user-images.githubusercontent.com/81467494/157031133-8bc5cc4e-9e59-4421-a76b-b2cd1faf26f2.png)
 
 #### 個股瀏覽 ####
 - 顯示前三十交易日成交價折線圖及前七交易日詳細資訊表格
 - 登入用戶可選擇追蹤股票及開啟通知
+
 ![Screen Shot 2022-03-07 at 8 06 24 PM](https://user-images.githubusercontent.com/81467494/157031855-a4cae4fd-a3b3-46ca-bcec-7bb2172b53df.png)
 
 #### 追蹤頁面 ####
 - 用戶可看到追蹤中及已開啟通知的標的
+
 ![Screen Shot 2022-03-07 at 8 07 56 PM](https://user-images.githubusercontent.com/81467494/157031968-dea39fe7-0f9f-4d9e-ac59-ea2f011e926c.png)
 
 #### 帳號管理 ####
