@@ -25,7 +25,7 @@ SNP500 Tracker: https://ycl-snp500.herokuapp.com/
 #### 首頁瀏覽 ####
 - 顯示前一交易日前十交易量、漲和跌幅標的和個別漲跌幅、交易量
 
-![Screen Shot 2022-03-07 at 8 03 17 PM](https://user-images.githubusercontent.com/81467494/157031133-8bc5cc4e-9e59-4421-a76b-b2cd1faf26f2.png)
+![Screen Shot 2022-03-07 at 8 13 15 PM](https://user-images.githubusercontent.com/81467494/157032433-ab0d73ad-f250-4bbc-9523-3eceb161e761.png)
 
 #### 個股瀏覽 ####
 - 顯示前三十交易日成交價折線圖及前七交易日詳細資訊表格
