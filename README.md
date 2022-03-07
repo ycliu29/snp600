@@ -1,4 +1,4 @@
-### S&P500 資訊網 ###
+## S&P500 資訊網 ##
 
 此專案透過 [yfinance](https://pypi.org/project/yfinance/) 套件存取 Yahoo Finance 的股市交易資料，涵蓋組成 S&P500 指數的 505 檔標的，主要功能包括：
 1. 首頁，前一交易日前十交易量、漲和跌幅標的
