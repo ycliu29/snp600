@@ -40,6 +40,7 @@ SNP500 Tracker: https://ycl-snp500.herokuapp.com/
 
 #### 帳號管理 ####
 - 用戶可以註冊、登入、登出網站
+
 ![Screen Shot 2022-03-07 at 8 10 31 PM](https://user-images.githubusercontent.com/81467494/157032038-09073a18-4e4d-4d3a-b582-3c2d19c67b17.png)
 ![Screen Shot 2022-03-07 at 8 10 37 PM](https://user-images.githubusercontent.com/81467494/157032052-d3fb4e24-f7a3-4fdc-9fef-dcd3ca086043.png)
 
