@@ -24,7 +24,6 @@ SNP500 Tracker: https://ycl-snp500.herokuapp.com/
 ### 功能介紹 ### 
 
 ### 專案架構 ### 
-(only listing major files)
 ```
 SNP600(project folder)   
 ├──main(web app)  
